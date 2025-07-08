@@ -1,0 +1,7 @@
+.*.swp
+scratch/*
+rakulib/.precomp/
+sdist/
+.fez
+scratch/
+archive/

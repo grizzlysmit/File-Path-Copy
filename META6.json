@@ -1,0 +1,29 @@
+{
+  "description": "A Raku application for .",
+  "name": "File::Copy",
+  "perl": "6.d",
+  "depends": [
+    ""
+  ],
+  "tags": [
+    ""
+  ],
+  "source-url": "https://github.com/grizzlysmit/File::Copy.git",
+  "version": "0.1.0",
+  "provides": {
+    "File::Copy": "bin/File::Copy.raku"
+  },
+  "auth": "zef:grizzlysmit",
+  "license": "LGPL-3.0-or-later",
+  "authors": [
+    "Francis Grizzly Smit <grizzly@smit.id.au>"
+  ],
+  "test-depends": [
+    ""
+  ],
+  "support": {
+    "source": "https://github.com/grizzlysmit/File::Copy.git",
+    "bugtracker": "https://github.com/grizzlysmit/File::Copy/issues",
+    "email": "grizzly@smit.id.au"
+  }
+}
