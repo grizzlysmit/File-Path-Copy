@@ -8,7 +8,7 @@
   "tags": [
     ""
   ],
-  "source-url": "https://github.com/grizzlysmit/File::Copy.git",
+  "source-url": "git@github.com:grizzlysmit/File-Path-Copy.git",
   "version": "0.1.0",
   "provides": {
     "File::Path::Copy": "lib/File::Path::Copy.rakumod"
@@ -22,8 +22,8 @@
     ""
   ],
   "support": {
-    "source": "https://github.com/grizzlysmit/File::Path::Copy.git",
-    "bugtracker": "https://github.com/grizzlysmit/File::Path::Copy/issues",
+    "source": "https://github.com/grizzlysmit/File-Path-Copy",
+    "bugtracker": "https://github.com/grizzlysmit/File-Path-Copy/issues",
     "email": "grizzly@smit.id.au"
   }
 }

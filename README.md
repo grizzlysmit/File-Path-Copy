@@ -92,7 +92,7 @@ Where
 
   * `:n` `:$no-to-check` Don't do the check on whether the to file is the same as the source.
 
-    * i.e. normally will check if `$from.basename eq $to.basename` if so then will try to copy `$from/*` into `$to/*` note this includes `.` files.
+    * i.e. normally will check if `$from.basename eq $to.basename` if so then will try to copy `$from/*` into `$to/*` note this includes `.` files; if this is true will not do this.
 
 [Table of Contents](#table-of-contents)
 

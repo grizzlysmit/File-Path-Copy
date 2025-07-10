@@ -61,7 +61,7 @@ Where
 =item1 C«:d»  C«:$dontrecurse»   Don't copy recursively, by default it will copy recursively.
 =item1 C«:c»  C«:$createonly»    Makes it an Error to try to overwrite a file.
 =item1 C«:n»  C«:$no-to-check»   Don't do the check on whether the to file is the same as the source.
-=item2 i.e. normally will check if C«$from.basename eq $to.basename» if so then will try to copy C«$from/*» into C«$to/*» note this includes C«.» files.
+=item2 i.e. normally will check if C«$from.basename eq $to.basename» if so then will try to copy C«$from/*» into C«$to/*» note this includes C«.» files; if this is true will not do this.
 
 L<Table of Contents|#table-of-contents>
 
