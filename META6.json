@@ -11,7 +11,7 @@
   "source-url": "https://github.com/grizzlysmit/File::Copy.git",
   "version": "0.1.0",
   "provides": {
-    "File::Copy": "bin/File::Copy.raku"
+    "File::Path::Copy": "lib/File::Path::Copy.rakumod"
   },
   "auth": "zef:grizzlysmit",
   "license": "LGPL-3.0-or-later",
@@ -22,8 +22,8 @@
     ""
   ],
   "support": {
-    "source": "https://github.com/grizzlysmit/File::Copy.git",
-    "bugtracker": "https://github.com/grizzlysmit/File::Copy/issues",
+    "source": "https://github.com/grizzlysmit/File::Path::Copy.git",
+    "bugtracker": "https://github.com/grizzlysmit/File::Path::Copy/issues",
     "email": "grizzly@smit.id.au"
   }
 }

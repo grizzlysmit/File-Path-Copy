@@ -1,0 +1,15 @@
+{
+    "exts": [
+        "rakumod"
+    ],
+    "docs": "docs",
+    "bin": "bin",
+    "name": "File::Path::Copy",
+    "separate-markdown-files": false,
+    "lib": "rakulib",
+    "comment": "File::Path::Copy ",
+    "only-app": false,
+    "markdown-path": "README.md",
+    "additional-pod-files": [
+    ]
+}

@@ -1,0 +1,9 @@
+use v6;
+use lib 'lib';
+use File::Path::Copy;
+use Test;
+
+plan 1;
+
+ok(copypath(".".IO, "../scratch".IO));
+

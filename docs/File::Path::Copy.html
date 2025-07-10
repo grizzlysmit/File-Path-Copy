@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>File::Path::Copy</title>
+<meta charset="UTF-8" />
+<link href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAA/wAAAP8AAACGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAABA
+AAAA/wAAAP8AAAAAAAAA/wAAAP9NAbX/TQG13gAAAPsAAABAAAAAAAAAAP8AAAD/AAAAAAAAAEAA
+AAD/TQG1/00Btf8AAAD/AAAA/wAAAP8AAAD/TQG1//8AAP9rAvv/AAAA/wAAAEAAAABlAAAAAAAA
+AP8AAAD/awL7//8AAP9NAbX/AAAA+QAAAP8AAAAAAAAA/wAAAP9NAbX/TQG1/wAAAP8AAAD/AAAA
+2gAAAP8AAAD/AAAA/00Btf9NAbX/AAAA/wAAANMAAAAJAAAAAAAAAAAAAABlAAAA/wAAAP8AnJz/
+AOLi/wD///8A////ANjY/wCFhf8AAAD/AAAA/wAAAEAAAAAAAAAACwAAAAAAAAAAAAAAAAAAAP8A
+hYX/AP///wD///9rAvv/awL7/wD///8A////AIWF/wAAAP8AAAAAAAAAAAAAAAIAAAAAAAAAAAAA
+AP8AAAD/AOPj/wD///9rAvv/AP///2sC+/8A////AP///wDj4/8AAAD/AAAA/wAAAAAAAAAAAAAA
+AAAAAP8AAAD//35+/wD///8A////AP///wD///8A////AP///wD///8A////AAAA/wAAAP8AAAD/
+AAAAAAAAAFYAAAD//35+/4UAAP8A////AIWF/wDT0/8A////AP///wCFhf8AxcX/AP///4UAAP+F
+AAD/AAAA/wAAAAAAAACubycn/99vb//GAAD/XFxc//////9cXFz/AP///1xcXP//////XFxc/wAA
+AP//fn7//35+/4UAAP8AAABAQAAA//8fH///fn7/AAAA//////8AAAD//////wAAAP//////AAAA
+////////AAD/awL7/4UAAP//fn7/AAAA/1IoKP//fn7//35+//8AAP9cXFz//////wCFhf8A////
+AIWF//////+FhYX//35+/4UAAP9rAvv//35+/wAAAP9mMjL//35+/2sC+///fn7/APsC/wAAAP8A
+////AP///wD///8AAAD/AAAA//9+fv/9AAD//35+/wAAAP8AAAD/hQAA//9+fv9rAvv//35+/wD7
+Av8AAAD/AAAAAAAAAEAAAAAAAAAAGQAAAP/RAACR/35+/wAAAP8A+wL/AAAA2gAAAGX/AADa/35+
+//9+fv8AAAD/AAAAAAAAAAAAAAB7AAAAAAAAAEAAAAAAAAAA//0AAP//fn7//35+/wAAAGUAAAAP
+AAAAZQAAAP8AAAD/AAAAAAAAAAAAAABlAAAA/4WFhQEAAAD/AAAAQAAAAAAAAAD/AAAA2gAAAGUA
+AAAAj/kAAAZgAAADgAAAgAEAAOAHAADgBwAAwAMAAIABAACAAQAAAAEAAAAAAAAAAAAAAAAAAAPA
+AACH4QAAzrMAAA==" rel="icon" type="image/x-icon" /><meta name="author" value="Francis Grizzly Smit (grizzly@smit.id.au)" />
+<meta name="version" value="v0.1.0" />
+<style>.comment {
+  color: #666; }
+
+.string {
+  color: #006810; }
+
+.string .source,
+.string .meta.embedded.line {
+  color: #5A5A5A; }
+
+.string .punctuation.section.embedded {
+  color: #920B2D; }
+
+.string .punctuation.section.embedded .source {
+  color: #920B2D; }
+
+.constant.numeric {
+  color: #D14; }
+
+.constant.language {
+  color: #606aa1; }
+
+.constant.character,
+.constant.other {
+  color: #606aa1; }
+
+.constant.symbol {
+  color: #990073; }
+
+.constant.numeric.line-number.find-in-files .match {
+  color: rgba(143, 190, 0, 0.63); }
+
+/* For 'rw', 'copy' etc. */
+.entity.name.type.trait {
+  color: #555CEE; }
+
+.entity.name.type.class {
+  color: #363F84; }
+
+.variable.other {
+  color: #CC0050; }
+
+.variable {
+  color: #08056B; }
+
+.variable.parameter {
+  color: #606aa1; }
+
+.keyword {
+  color: #222;
+  font-weight: bold; }
+
+.keyword.unit {
+  color: #445588; }
+
+.keyword.special-method {
+  color: #0056C3; }
+
+.storage {
+  color: #222; }
+
+.storage.type {
+  color: #222; }
+
+.entity.name.class {
+  color: #606aa1; }
+
+.entity.other.inherited-class {
+  color: #606aa1; }
+
+.entity.name.function {
+  color: #900; }
+
+/* Regex/Grammars */
+.string.regexp.construct {
+  color: #0078FF; }
+
+/* `token`, `regex` */
+.storage.type.declare.regexp.named {
+  color: #393276; }
+
+/* The name of the named regex */
+.entity.name.function.regexp {
+  color: #7415E9; }
+
+.entity.name.function.regexp.named.TOP {
+  color: #158de9; }
+
+/* /<this>/ */
+.variable.other.identifier.regexname {
+  color: #a52020; }
+
+.entity.name.tag {
+  color: #008080; }
+
+.entity.other.attribute-name {
+  color: #458;
+  font-weight: bold; }
+
+.entity.name.filename.find-in-files {
+  color: #E6DB74; }
+
+.support.constant,
+.support.function,
+.support.type {
+  color: #458; }
+
+.support.class {
+  color: #004040; }
+
+.invalid {
+  color: #F8F8F0;
+  background-color: #00A8C6; }
+
+.invalid.deprecated {
+  color: #F8F8F0;
+  background-color: #8FBE00; }
+
+.meta.structure.dictionary.json > .string.quoted.double.json,
+.meta.structure.dictionary.json > .string.quoted.double.json .punctuation.string {
+  color: #000080; }
+
+.meta.structure.dictionary.value.json > .string.quoted.double.json {
+  color: #d14; }
+
+.meta.diff,
+.meta.diff.header {
+  color: #75715E; }
+
+.css.support.property-name {
+  font-weight: bold;
+  color: #333; }
+
+.css.constant {
+  color: #099; }
+
+.source.gfm {
+  color: #444; }
+
+.gfm .markup.heading {
+  color: #111; }
+
+.gfm .link {
+  color: #888; }
+
+.gfm .variable.list {
+  color: #888; }
+
+.markdown .paragraph {
+  color: #444; }
+
+.markdown .heading {
+  color: #111; }
+
+.markdown .link {
+  color: #888; }
+
+.markdown .link .string {
+  color: #888; }
+
+.storage, .storage.declarator {
+  font-weight: bold;
+  color: #A626A4; }
+
+/* Some preexisting Atom tags, probably not needed but moving to the end */
+atom-text-editor {
+  background-color: white;
+  color: #555; }
+
+atom-text-editor .invisible-character {
+  color: rgba(85, 85, 85, 0.2); }
+
+atom-text-editor .indent-guide {
+  color: rgba(85, 85, 85, 0.2); }
+
+atom-text-editor .wrap-guide {
+  background-color: rgba(85, 85, 85, 0.2); }
+
+atom-text-editor .gutter {
+  color: #555;
+  background: white; }
+
+atom-text-editor .gutter .line-number.folded,
+atom-text-editor .gutter .line-number:after,
+atom-text-editor .fold-marker:after {
+  color: #e87b00; }
+
+atom-text-editor .invisible {
+  color: #555; }
+
+atom-text-editor .selection .region {
+  background-color: #e1e1e1; }
+
+atom-text-editor .bracket-matcher .region {
+  background-color: #C9C9C9;
+  opacity: .7;
+  border-bottom: 0 none; }
+
+atom-text-editor.is-focused .cursor {
+  border-color: black; }
+
+atom-text-editor.is-focused .selection .region {
+  background-color: #afc4da; }
+
+atom-text-editor.is-focused .line-number.cursor-line-no-selection,
+atom-text-editor.is-focused .line.cursor-line {
+  background-color: rgba(255, 255, 134, 0.34); }
+
+.pod {
+  padding: 0;
+  margin: 0; }
+
+.pod-content {
+  border: #F2C100 0.2em solid;
+  margin: 1em;
+  padding: 2em;
+  border-radius: 1em;
+  box-shadow: 0.5em 0.5em 1em #888888; }
+  .pod-content dt {
+    font-weight: bold;
+    margin-bottom: 0.2em; }
+  .pod-content dd {
+    margin-bottom: 1em; }
+  .pod-content h1 a, .pod-content h2 a, .pod-content h3 a, .pod-content h4 a, .pod-content h5 a, .pod-content h6 a {
+    color: black; }
+  .pod-content h1 {
+    padding-top: 0.25em; }
+
+.pod-table tr:nth-child(odd) {
+  background-color: rgba(0, 0, 0, 0.031373); }
+
+header {
+  text-align: center;
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  font-family: sans-serif;
+  font-weight: bold;
+  border-radius: 0 0 1em 1em;
+  margin: 0 0 1em 0;
+  padding: 0.5em 0em 0.5em 0em;
+  line-height: 0.75em;
+  overflow: hidden;
+  border-top: none;
+  font-size: x-large;
+  background: #e6dbd0bd;
+  z-index: 10; }
+  header #Camelia_bug {
+    width: 100px;
+    height: 48px;
+    float: left; }
+
+kbd {
+  font-family: "Droid Sans Mono", "Luxi Mono", "Inconsolata", monospace; }
+
+samp {
+  font-family: "Terminus", "Courier", "Lucida Console", monospace; }
+
+u {
+  text-decoration: none; }
+
+a {
+  text-decoration: none; }
+
+pre {
+  background-color: rgba(120, 60, 0, 0.045);
+  border: 1px solid #CFCFCF;
+  padding: 0.6ex;
+  color: black;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-all; }
+
+nav {
+  display: grid;
+  grid-gap: 0.75em;
+  width: 25vw;
+  padding: 0.75em;
+  border-radius: 1em;
+  background-color: #bbb7b245;
+  float: left;
+  margin: 0 0.75em 0.7em 0; }
+
+#TOC {
+  grid-row: 1; }
+
+#Glossary {
+  grid-row: 2; }
+
+.glossary {
+  display: grid;
+  grid-template-columns: 10% 80% 10%;
+  border-radius: inherit;
+  padding: 15px;
+  background-color: inherit; }
+  .glossary > * > a {
+    text-decoration: none;
+    color: navy; }
+
+.glossary-caption {
+  grid-column: 1 / span 3;
+  justify-self: center;
+  font-size: 120%;
+  font-weight: bold; }
+
+.glossary-defn {
+  grid-column: 1 / span 2;
+  font-size: 11pt;
+  line-height: 1.1;
+  margin-top: 0.4em;
+  color: brown; }
+  .glossary-defn.header {
+    font-weight: bold; }
+
+.glossary-place {
+  grid-column: 2 / span 2;
+  line-height: 1.1; }
+  .glossary-place.header {
+    font-weight: bold;
+    color: navy; }
+
+#TOC {
+  border-collapse: collapse;
+  border-radius: inherit;
+  background-color: inherit;
+  padding: 15px;
+  color: black; }
+  #TOC caption {
+    text-align: center;
+    font-size: 120%;
+    font-weight: bold; }
+  #TOC tr {
+    padding: 0.25pt 5pt 0 0;
+    font-size: 11pt; }
+    #TOC tr td a {
+      text-decoration: none;
+      color: navy; }
+    #TOC tr.toc-level-1 td {
+      padding-top: 4pt;
+      font-weight: bold;
+      position: relative;
+      left: 0; }
+      #TOC tr.toc-level-1 td:first-child td {
+        padding-top: 0; }
+    #TOC tr.toc-level-2 td {
+      padding-top: 3pt;
+      position: relative;
+      left: 6px; }
+    #TOC tr.toc-level-3 td {
+      padding-top: 2pt;
+      font-size: 0.9em;
+      position: relative;
+      left: 8px; }
+    #TOC tr.toc-level-4 td {
+      padding-top: 2pt;
+      font-size: 0.8em;
+      position: relative;
+      left: 10px; }
+
+.subtitle {
+  font-style: italic;
+  text-align: center; }
+
+footer {
+  padding: 5px;
+  text-align: center;
+  font-size: 80%;
+  margin: 0 1em 1em;
+  border-color: #F2C100;
+  background-color: #F5EF7B;
+  border-radius: 1em;
+  border-style: solid;
+  box-shadow: 0.5em 0.5em 1em #888888 p;
+    box-shadow-margin: 3px 0; }
+
+.footnptes {
+  border-style: solid;
+  border-color: blue;
+  border-radius: 1em; }
+
+/*# sourceMappingURL=pod.css.map */
+</style></head>
+	<body class="pod">
+<header><svg version="1.1" id="Camelia_bug" xmlns:svg="http://www.w3.org/2000/svg"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="146.887 35.071 679.648 628.263" enable-background="new 146.887 35.071 679.648 628.263" xml:space="preserve">
+<g>
+
+		<rect x="341.717" y="326.778" transform="matrix(0.4226 -0.9063 0.9063 0.4226 -99.8267 501.2325)" stroke="#000000" stroke-width="1.0588" stroke-miterlimit="10" width="3.516" height="4.372"/>
+	<path id="path21" d="M287.307,517.452c-64.033,12.72-125.053-23.075-136.347-80.045c-11.248-56.844,31.519-113.25,95.512-125.885
+		c63.946-12.76,125.053,23.075,136.301,79.919C394.067,448.412,351.299,504.818,287.307,517.452z"/>
+	<path id="path25" fill="none" stroke="#000000" stroke-width="4.5546" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M287.307,517.452c-64.033,12.72-125.053-23.075-136.347-80.045c-11.248-56.844,31.519-113.25,95.512-125.885
+		c63.946-12.76,125.053,23.075,136.301,79.919C394.067,448.412,351.299,504.818,287.307,517.452z"/>
+	<path id="path27" d="M440.826,119.408c39.107,71.093,19.552,156.886-43.71,191.57c-63.176,34.724-146.095,5.182-185.117-65.871
+		c-39.108-71.093-19.512-156.973,43.664-191.696C318.925,18.728,401.758,48.229,440.826,119.408z"/>
+	<path id="path31" fill="none" stroke="#000000" stroke-width="7.611" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M440.826,119.408c39.107,71.093,19.552,156.886-43.71,191.57c-63.176,34.724-146.095,5.182-185.117-65.871
+		c-39.108-71.093-19.512-156.973,43.664-191.696C318.925,18.728,401.758,48.229,440.826,119.408z"/>
+	<path id="path33" fill="#00FF00" d="M327.422,226.986c-13.709-28.626,1.468-64.548,33.873-80.061
+		c32.53-15.559,69.983-5.016,83.652,23.696c13.795,28.667-1.342,64.502-33.872,80.061
+		C378.63,266.282,341.217,255.652,327.422,226.986z"/>
+	<path id="path37" fill="none" d="M327.422,226.986c-13.709-28.626,1.468-64.548,33.873-80.061
+		c32.53-15.559,69.983-5.016,83.652,23.696c13.795,28.667-1.342,64.502-33.872,80.061
+		C378.63,266.282,341.217,255.652,327.422,226.986z"/>
+	<path id="path39" d="M310.944,213.744c-13.755-28.753,1.382-64.588,33.827-80.187c32.53-15.559,70.029-4.89,83.738,23.736
+		c13.795,28.667-1.382,64.588-33.912,80.147C362.152,253.04,324.653,242.37,310.944,213.744z"/>
+	<path id="path43" fill="none" d="M310.944,213.744c-13.755-28.753,1.382-64.588,33.827-80.187
+		c32.53-15.559,70.029-4.89,83.738,23.736c13.795,28.667-1.382,64.588-33.912,80.147C362.152,253.04,324.653,242.37,310.944,213.744
+		z"/>
+	<path id="path47" fill="none" stroke="#0000FF" stroke-width="22.8331" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M331.586,290.7c-24.709-40.572-65.605-82.191-72.02-123.986c-4.804-31.081-18.469-48.78,11.408-63.373
+		c28.414-13.703,49.579-32.779,76.581-25.013c26.488,16.966,47.289,29.707,50.718,69.585c-10.664,17.471-22.618,59.3-55.203,66.654
+		l-52.16,3.679"/>
+	<path id="path49" fill="#FF3366" d="M306.479,185.758c-20.502-9.56-29.535-33.594-20.136-53.752
+		c9.4-20.158,33.617-28.686,54.119-19.126c20.502,9.56,29.536,33.594,20.137,53.752C351.2,186.79,326.982,195.319,306.479,185.758z"
+		/>
+	<path id="path53" fill="none" d="M306.479,185.758c-20.502-9.56-29.535-33.594-20.136-53.752
+		c9.4-20.158,33.617-28.686,54.119-19.126c20.502,9.56,29.536,33.594,20.137,53.752C351.2,186.79,326.982,195.319,306.479,185.758z"
+		/>
+	<path id="path55" fill="#0000FF" d="M330.41,177.62c-10.599,2.713-21.494-3.835-24.299-14.687
+		c-2.806-10.852,3.571-21.827,14.256-24.5c10.599-2.713,21.494,3.835,24.213,14.647C347.386,163.932,341.01,174.907,330.41,177.62z"
+		/>
+	<path id="path59" fill="none" d="M330.41,177.62c-10.599,2.713-21.494-3.835-24.299-14.687c-2.806-10.852,3.571-21.827,14.256-24.5
+		c10.599-2.713,21.494,3.835,24.213,14.647C347.386,163.932,341.01,174.907,330.41,177.62z"/>
+	<path id="path63" fill="none" stroke="#0000FF" stroke-width="22.8331" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M333.649,294.598c-24.755-40.699-79.026-66.006-85.48-107.715c-4.763-31.167-17.983-74.562,11.854-89.069
+		c30.129-19.406,60.893-28.028,88.372-15.214c26.614,16.92,50.629,41.438,47.157,66.876c-10.618,17.597-20.445,48.567-53.029,55.921
+		l-53.525,12.901"/>
+	<path id="path65" fill="#0000FF" d="M345.42,311.413c-4.547,3.229-14.546-3.217-22.289-14.274
+		c-7.83-11.097-10.4-22.678-5.853-25.906c4.593-3.102,14.546,3.217,22.375,14.314C347.356,296.69,350.053,308.225,345.42,311.413z"
+		/>
+	<path id="path69" fill="none" d="M345.42,311.413c-4.547,3.229-14.546-3.217-22.289-14.274c-7.83-11.097-10.4-22.678-5.853-25.906
+		c4.593-3.102,14.546,3.217,22.375,14.314C347.356,296.69,350.053,308.225,345.42,311.413z"/>
+	<path id="path71" d="M638.408,495.23c31.369,57.102,15.611,126.207-35.251,154.089c-50.901,27.968-117.546,4.232-149-52.91
+		c-31.329-57.188-15.61-126.207,35.251-154.088C540.309,414.352,606.994,438.002,638.408,495.23z"/>
+	<path id="path75" fill="none" stroke="#000000" stroke-width="4.5546" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M638.408,495.23c31.369,57.102,15.611,126.207-35.251,154.089c-50.901,27.968-117.546,4.232-149-52.91
+		c-31.329-57.188-15.61-126.207,35.251-154.088C540.309,414.352,606.994,438.002,638.408,495.23z"/>
+	<path id="path77" fill="#FFFF00" d="M404.068,481.392c-55.132-25.709-83.124-82.18-62.557-126.285
+		c20.527-44.02,81.819-58.962,136.951-33.253c55.132,25.708,83.084,82.266,62.557,126.286
+		C520.453,492.244,459.2,507.1,404.068,481.392z"/>
+	<path id="path81" fill="none" stroke="#000000" stroke-width="9.1392" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M404.068,481.392c-55.132-25.709-83.124-82.18-62.557-126.285c20.527-44.02,81.819-58.962,136.951-33.253
+		c55.132,25.708,83.084,82.266,62.557,126.286C520.453,492.244,459.2,507.1,404.068,481.392z"/>
+	<path id="path83" fill="#FFFFFF" d="M373.309,368.78c-22.053-10.284-31.529-36.516-21.286-58.483
+		c10.284-22.053,36.43-31.57,58.483-21.286c22.053,10.283,31.656,36.47,21.372,58.523
+		C421.635,369.501,395.362,379.064,373.309,368.78z"/>
+	<path id="path87" fill="none" stroke="#000000" stroke-width="10.6674" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M373.309,368.78c-22.053-10.284-31.529-36.516-21.286-58.483c10.284-22.053,36.43-31.57,58.483-21.286
+		c22.053,10.283,31.656,36.47,21.372,58.523C421.635,369.501,395.362,379.064,373.309,368.78z"/>
+	<path id="path89" d="M702.578,479.741c-79.047,15.683-154.46-28.607-168.371-98.858c-13.998-70.291,38.827-139.942,117.915-155.71
+		c79.046-15.682,154.46,28.608,168.371,98.858C834.45,394.409,781.625,464.06,702.578,479.741z"/>
+	<path id="path93" fill="none" stroke="#000000" stroke-width="7.611" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M702.578,479.741c-79.047,15.683-154.46-28.607-168.371-98.858c-13.998-70.291,38.827-139.942,117.915-155.71
+		c79.046-15.682,154.46,28.608,168.371,98.858C834.45,394.409,781.625,464.06,702.578,479.741z"/>
+	<path id="path95" fill="#00FF00" d="M731.211,452.297c-30.615,7.853-62.593-13.981-71.492-48.649
+		c-8.9-34.668,8.655-69.167,39.27-77.019c30.615-7.853,62.634,13.895,71.493,48.649
+		C779.382,409.946,761.826,444.444,731.211,452.297z"/>
+	<path id="path99" fill="none" d="M731.211,452.297c-30.615,7.853-62.593-13.981-71.492-48.649
+		c-8.9-34.668,8.655-69.167,39.27-77.019c30.615-7.853,62.634,13.895,71.493,48.649
+		C779.382,409.946,761.826,444.444,731.211,452.297z"/>
+	<path id="path101" d="M712.776,443.701c-30.614,7.853-62.593-13.98-71.491-48.649c-8.9-34.668,8.656-69.166,39.23-76.933
+		c30.615-7.853,62.634,13.895,71.533,48.563C760.947,401.35,743.305,435.808,712.776,443.701z"/>
+	<path id="path105" fill="none" d="M712.776,443.701c-30.614,7.853-62.593-13.98-71.491-48.649
+		c-8.9-34.668,8.656-69.166,39.23-76.933c30.615-7.853,62.634,13.895,71.533,48.563C760.947,401.35,743.305,435.808,712.776,443.701
+		z"/>
+	<path id="path109" fill="none" stroke="#0000FF" stroke-width="22.8331" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M789.433,343.633c7.833-57.28-69.507-72.474-103.424-67.21c-46.75,7.146-40.062,4.496-75.909,26.27
+		c-26.81,16.339-32.783,51.414-24.763,83.47c7.547,30.368,19.437,23.536,49.248,32.928c29.81,9.391,37.918,12.018,55.007-6.861
+		c21.422-23.676,7.193-65.13-8.027-94.565l-18.155-31.014"/>
+	<path id="path111" fill="#FF3366" d="M623.885,391.658c-18.09-8.436-25.74-30.041-17.183-48.39
+		c8.556-18.348,30.024-26.376,48.114-17.941c18.004,8.395,25.652,30,17.096,48.349C663.356,392.025,641.889,400.053,623.885,391.658
+		z"/>
+	<path id="path115" fill="none" d="M623.885,391.658c-18.09-8.436-25.74-30.041-17.183-48.39
+		c8.556-18.348,30.024-26.376,48.114-17.941c18.004,8.395,25.652,30,17.096,48.349C663.356,392.025,641.889,400.053,623.885,391.658
+		z"/>
+	<path id="path117" fill="#0000FF" d="M641.93,382.873c-10.559,2.627-21.367-3.882-24.087-14.693
+		c-2.759-10.725,3.53-21.741,14.003-24.408c10.513-2.754,21.368,3.881,24.127,14.606C658.693,369.19,652.443,380.119,641.93,382.873
+		z"/>
+	<path id="path121" fill="none" d="M641.93,382.873c-10.559,2.627-21.367-3.882-24.087-14.693
+		c-2.759-10.725,3.53-21.741,14.003-24.408c10.513-2.754,21.368,3.881,24.127,14.606C658.693,369.19,652.443,380.119,641.93,382.873
+		z"/>
+	<path id="path125" fill="none" stroke="#0000FF" stroke-width="22.8331" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M794.894,344.292c7.833-57.28-81.53-87.623-115.447-82.36c-46.75,7.146-39.326,4.944-75.174,26.718
+		c-26.77,16.253-32.613,65.441-24.594,97.497c7.549,30.368,22.886,31.437,52.61,40.788c29.81,9.391,39.309,14.659,56.524-4.266
+		c21.383-23.589,32.167-59.986,16.902-89.548l-42.305-46.47"/>
+	<path id="path127" fill="#FFFFFF" d="M505.367,430.36c-22.053-10.283-31.615-36.556-21.372-58.523
+		c10.284-22.053,36.516-31.53,58.569-21.246c22.053,10.284,31.569,36.43,21.286,58.483
+		C553.607,431.041,527.42,440.644,505.367,430.36z"/>
+	<path id="path131" fill="none" stroke="#000000" stroke-width="10.6674" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M505.367,430.36c-22.053-10.283-31.615-36.556-21.372-58.523c10.284-22.053,36.516-31.53,58.569-21.246
+		c22.053,10.284,31.569,36.43,21.286,58.483C553.607,431.041,527.42,440.644,505.367,430.36z"/>
+	<path id="path133" d="M383.875,349.271c-11.027-5.142-15.808-18.278-10.666-29.304c5.142-11.027,18.278-15.808,29.305-10.666
+		c11.026,5.142,15.722,18.238,10.58,29.265C407.952,349.591,394.901,354.413,383.875,349.271z"/>
+	<path id="path137" fill="none" d="M383.875,349.271c-11.027-5.142-15.808-18.278-10.666-29.304
+		c5.142-11.027,18.278-15.808,29.305-10.666c11.026,5.142,15.722,18.238,10.58,29.265
+		C407.952,349.591,394.901,354.413,383.875,349.271z"/>
+	<path id="path139" d="M517.236,408.732c-11.113-5.182-15.808-18.279-10.707-29.219c5.142-11.026,18.152-15.761,29.265-10.579
+		c11.026,5.142,15.762,18.152,10.62,29.178C541.313,409.052,528.262,413.874,517.236,408.732z"/>
+	<path id="path143" fill="none" d="M517.236,408.732c-11.113-5.182-15.808-18.279-10.707-29.219
+		c5.142-11.026,18.152-15.761,29.265-10.579c11.026,5.142,15.762,18.152,10.62,29.178
+		C541.313,409.052,528.262,413.874,517.236,408.732z"/>
+	<path id="path147" fill="none" stroke="#FF3366" stroke-width="13.6939" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M397.357,406.947c-16.697,25.46,53.443,82.183,63.645,35.342l1.085-2.326"/>
+	<path id="path151" fill="none" stroke="#000000" stroke-width="10.6674" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M466.379,315.38c8.486-22.471,27.9-43.413,27.352-68.104l0.923-23.795l-19.37,13.201l7.592,5.533"/>
+	<path id="path155" fill="none" stroke="#000000" stroke-width="10.6674" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M490.672,326.708c11.759-20.945,15.236-49.318,34.503-64.77l17.635-16.003l2.338,23.324l-9.12-2.26"/>
+	<path id="path157" fill="#FF3366" d="M190.744,447.674c-14.117-29.55,2.34-66.868,36.84-83.501
+		c34.546-16.508,73.997-5.976,88.201,23.614c14.117,29.551-2.341,66.868-36.886,83.375
+		C244.399,487.795,204.947,477.264,190.744,447.674z"/>
+	<path id="path161" fill="none" d="M190.744,447.674c-14.117-29.55,2.34-66.868,36.84-83.501
+		c34.546-16.508,73.997-5.976,88.201,23.614c14.117,29.551-2.341,66.868-36.886,83.375
+		C244.399,487.795,204.947,477.264,190.744,447.674z"/>
+	<path id="path165" fill="none" stroke="#000000" stroke-width="9.1392" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M382.992,472.613l-12.01,25.756l3.201,30.02l0,0"/>
+	<path id="path169" fill="none" stroke="#000000" stroke-width="9.1392" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M414.434,487.275l-12.05,25.842l3.201,30.02l0,0"/>
+	<path id="path171" fill="#0000FF" d="M231.881,429.626c-6.401-13.263,4.154-31.624,23.588-40.914
+		c19.474-9.377,40.314-6.162,46.76,7.227c6.314,13.222-4.24,31.583-23.628,41C259.167,446.229,238.241,442.974,231.881,429.626z"/>
+	<path id="path175" fill="none" d="M231.881,429.626c-6.401-13.263,4.154-31.624,23.588-40.914
+		c19.474-9.377,40.314-6.162,46.76,7.227c6.314,13.222-4.24,31.583-23.628,41C259.167,446.229,238.241,442.974,231.881,429.626z"/>
+	<path id="path177" fill="#FF3366" d="M565.86,622.698c-31.798,8.139-65.223-15.313-74.743-52.473
+		c-9.474-37.034,8.574-73.714,40.245-81.808c31.797-8.14,65.224,15.313,74.784,52.386
+		C615.579,577.923,597.571,614.518,565.86,622.698z"/>
+	<path id="path181" fill="none" d="M565.86,622.698c-31.798,8.139-65.223-15.313-74.743-52.473
+		c-9.474-37.034,8.574-73.714,40.245-81.808c31.797-8.14,65.224,15.313,74.784,52.386
+		C615.579,577.923,597.571,614.518,565.86,622.698z"/>
+	<path id="path183" fill="#0000FF" d="M549.057,580.463c-14.274,3.623-30.218-10.315-35.548-31.048
+		c-5.375-20.86,1.907-40.746,16.266-44.328c14.228-3.749,30.173,10.189,35.547,31.049
+		C570.652,556.869,563.372,576.756,549.057,580.463z"/>
+	<path id="path187" fill="none" d="M549.057,580.463c-14.274,3.623-30.218-10.315-35.548-31.048
+		c-5.375-20.86,1.907-40.746,16.266-44.328c14.228-3.749,30.173,10.189,35.547,31.049
+		C570.652,556.869,563.372,576.756,549.057,580.463z"/>
+
+		<text transform="matrix(0.9063 0.4226 -0.4226 0.9063 660.7561 513.2013)" fill="#808080" font-family="'ArialMT'" font-size="15.2079px">T</text>
+
+		<text transform="matrix(0.9063 0.4226 -0.4226 0.9063 669.1085 517.0961)" fill="#808080" font-family="'ArialMT'" font-size="15.2079px">M</text>
+	<path id="path195" fill="#0000FF" d="M796.83,365.331c-6.942,1.168-14.899-11.457-17.826-28.344
+		c-3.054-16.84,0.203-31.472,7.058-32.68c6.856-1.207,14.899,11.457,17.826,28.344C806.857,349.451,803.686,364.123,796.83,365.331z
+		"/>
+	<path id="path199" fill="none" d="M796.83,365.331c-6.942,1.168-14.899-11.457-17.826-28.344
+		c-3.054-16.84,0.203-31.472,7.058-32.68c6.856-1.207,14.899,11.457,17.826,28.344C806.857,349.451,803.686,364.123,796.83,365.331z
+		"/>
+
+		<rect x="551.153" y="428.32" transform="matrix(0.4226 -0.9063 0.9063 0.4226 -70.9303 749.6747)" stroke="#000000" stroke-width="1.0588" stroke-miterlimit="10" width="3.517" height="4.372"/>
+</g>
+</svg>
+<h1 class="title">File::Path::Copy</h1></header><div class="pod-content"><nav><div id="TOC"><table>
+<caption>Table of Contents</caption>
+<tr class="toc-level-1"><td class="toc-text"><a href="#File::Path::Copy">File::Path::Copy</a></td></tr>
+ <tr class="toc-level-1"><td class="toc-text"><a href="#Module_File::Path::Copy">Module File::Path::Copy</a></td></tr>
+ <tr class="toc-level-2"><td class="toc-text"><a href="#Table_of_Contents">Table of Contents</a></td></tr>
+ <tr class="toc-level-1"><td class="toc-text"><a href="#Name">Name</a></td></tr>
+ <tr class="toc-level-1"><td class="toc-text"><a href="#Copyright">Copyright</a></td></tr>
+ <tr class="toc-level-1"><td class="toc-text"><a href="#Introduction">Introduction</a></td></tr>
+ <tr class="toc-level-2"><td class="toc-text"><a href="#Motivation">Motivation</a></td></tr>
+ <tr class="toc-level-1"><td class="toc-text"><a href="#sub_copypath(...)_is_export">sub copypath(...) is export</a></td></tr>
+</table></div>
+</nav><div id="File::Path::Copy_0"></div><div class="subtitle"><p>A Raku module for recursively copying files.</p></div><div class="pod-body"><section name="___top"><h1 id="File::Path::Copy"><a href="#___top" class="u" title="go to top of document">File::Path::Copy</a></h1>
+<h1 id="Module_File::Path::Copy"><a href="#___top" class="u" title="go to top of document">Module File::Path::Copy</a></h1>
+<h2 id="Table_of_Contents"><a href="#___top" class="u" title="go to top of document">Table of Contents</a></h2>
+<ul>
+<li><p><a href="#name">NAME</a></p></li>
+<li><p><a href="#author">AUTHOR</a></p></li>
+<li><p><a href="#version">VERSION</a></p></li>
+<li><p><a href="#title">TITLE</a></p></li>
+<li><p><a href="#subtitle">SUBTITLE</a></p></li>
+<li><p><a href="#copyright">COPYRIGHT</a></p></li>
+<li><p><a href="#introduction">Introduction</a></p></li>
+<ul>
+<li><p><a href="#motivation">Motivation</a></p></li>
+</ul>
+<li><p><a href="#pack">Pack</a></p></li>
+</ul>
+<section>
+<h1 id="Name"><a href="#___top" class="u" title="go to top of document">NAME</a></h1>
+<p>File::Path::Copy </p>
+</section>
+<section>
+<h1 id="Copyright"><a href="#File::Path::Copy_0" class="u" title="go to top of document">COPYRIGHT</a></h1>
+<p>GPL V3.0+ <a href="https://github.com/grizzlysmit/File::Path::Copy/blob/main/LICENSE">LICENSE</a></p>
+</section>
+<p><a href="#table-of-contents">Top of Document</a></p><h1 id="Introduction"><a href="#File::Path::Copy_0" class="u" title="go to top of document">Introduction</a></h1>
+<p>This is a Raku module to recursively copy files. </p><h2 id="Motivation"><a href="#File::Path::Copy_0" class="u" title="go to top of document">Motivation</a></h2>
+<p>None of the other modules I tried worked so here is mine. </p><p><a href="#table-of-contents">Table of Contents</a></p><h1 id="sub_copypath(...)_is_export"><a href="#File::Path::Copy_0" class="u" title="go to top of document">sub copypath(...) is export</a></h1>
+<pre class="pod-block-code">sub copypath(IO::Path $from, IO::Path $to,
+                Bool:D :d(:$dontrecurse) = False,
+                Bool:D :c(:$createonly) = False, Bool:D :n(:$no-to-check) = False --&gt; Bool:D) is export
+
+</pre><p>Copy the <code>$from</code> path to the <code>$to</code> path recursively by default.</p><p>Where</p><ul>
+<li><p><code>$from</code> The path to copy from.</p></li>
+<li><p><code>$to</code> The path to copy to.</p></li>
+<li><p><code>:d</code> <code>:$dontrecurse</code> Don't copy recursively, by default it will copy recursively.</p></li>
+<li><p><code>:c</code> <code>:$createonly</code> Makes it an Error to try to overwrite a file.</p></li>
+<li><p><code>:n</code> <code>:$no-to-check</code> Don't do the check on whether the to file is the same as the source.</p></li>
+<ul>
+<li><p>i.e. normally will check if <code>$from.basename eq $to.basename</code> if so then will try to copy <code>$from/*</code> into <code>$to/*</code> note this includes <code>.</code> files.</p></li>
+</ul>
+</ul>
+<p><a href="#table-of-contents">Table of Contents</a></p></section>		</div>
+</div><footer><div>Rendered from <span class="path">UNNAMED</span></div><div>at <span class="time">2025-07-10T14:53:14Z</span></div></footer>
+	</body>
+</html>
+
