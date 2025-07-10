@@ -23,7 +23,7 @@ Table of Contents
 
     * [Motivation](#motivation)
 
-  * [Pack](#pack)
+  * [sub copypath(...) is export](#sub-copypath-is-export)
 
 NAME
 ====

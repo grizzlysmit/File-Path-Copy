@@ -19,7 +19,7 @@ Table of Contents
 =item1 L<COPYRIGHT|#copyright>
 =item1 L<Introduction|#introduction>
 =item2 L<Motivation|#motivation>
-=item1 L<Pack|#pack>
+=item1 L<sub copypath(...) is export|#sub-copypath-is-export>
 
 
 =NAME File::Path::Copy 
