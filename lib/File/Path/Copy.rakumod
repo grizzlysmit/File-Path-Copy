@@ -1,4 +1,4 @@
-unit module File::Path::Copy:ver<0.1.11>:auth<Francis Grizzly Smit (grizzly@smit.id.au)>;
+unit module File::Path::Copy:ver<0.1.12>:auth<Francis Grizzly Smit (grizzly@smit.id.au)>;
 
 =begin pod
 
@@ -26,7 +26,7 @@ Table of Contents
 
 =NAME File::Path::Copy 
 =AUTHOR Francis Grizzly Smit (grizzly@smit.id.au)
-=VERSION v0.1.11
+=VERSION v0.1.12
 =TITLE File::Path::Copy
 =SUBTITLE A Raku module for recursively copying or deleting files.
 

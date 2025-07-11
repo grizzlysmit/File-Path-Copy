@@ -4,9 +4,9 @@ use Test;
 
 plan 1;
 
-constant AUTHOR = ?(%*ENV«AUTHOR_TESTING»);
+my Bool:D $AUTHOR = (%*ENV«AUTHOR_TESTING»:exists ?? ?(%*ENV«AUTHOR_TESTING») !! False);
 
-if AUTHOR {
+if $AUTHOR {
     require Test::META <&meta-ok>;
     meta-ok :relaxed-name;
     done-testing;
