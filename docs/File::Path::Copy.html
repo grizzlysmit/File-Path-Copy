@@ -585,6 +585,8 @@ footer {
  <tr class="toc-level-1"><td class="toc-text"><a href="#Introduction">Introduction</a></td></tr>
  <tr class="toc-level-2"><td class="toc-text"><a href="#Motivation">Motivation</a></td></tr>
  <tr class="toc-level-1"><td class="toc-text"><a href="#sub_copypath(...)_is_export">sub copypath(...) is export</a></td></tr>
+ <tr class="toc-level-1"><td class="toc-text"><a href="#sub_prunepath(...)_is_export">sub prunepath(...) is export</a></td></tr>
+ <tr class="toc-level-1"><td class="toc-text"><a href="#sub_emptypath(...)_is_export">sub emptypath(...) is export</a></td></tr>
 </table></div>
 </nav><div id="File::Path::Copy_0"></div><div class="subtitle"><p>A Raku module for recursively copying files.</p></div><div class="pod-body"><section name="___top"><h1 id="File::Path::Copy"><a href="#___top" class="u" title="go to top of document">File::Path::Copy</a></h1>
 <h1 id="Module_File::Path::Copy"><a href="#___top" class="u" title="go to top of document">Module File::Path::Copy</a></h1>
@@ -601,6 +603,8 @@ footer {
 <li><p><a href="#motivation">Motivation</a></p></li>
 </ul>
 <li><p><a href="#sub-copypath-is-export">sub copypath(...) is export</a></p></li>
+<li><p><a href="#sub-prunepath-is-export">sub prunepath(...) is export</a></p></li>
+<li><p><a href="#sub-emptypath-is-export">sub emptypath(...) is export</a></p></li>
 </ul>
 <section>
 <h1 id="Name"><a href="#___top" class="u" title="go to top of document">NAME</a></h1>
@@ -614,8 +618,9 @@ footer {
 <p>This is a Raku module to recursively copy files. </p><h2 id="Motivation"><a href="#File::Path::Copy_0" class="u" title="go to top of document">Motivation</a></h2>
 <p>None of the other modules I tried worked so here is mine. </p><p><a href="#table-of-contents">Table of Contents</a></p><h1 id="sub_copypath(...)_is_export"><a href="#File::Path::Copy_0" class="u" title="go to top of document">sub copypath(...) is export</a></h1>
 <pre class="pod-block-code">sub copypath(IO::Path $from, IO::Path $to,
-                Bool:D :d(:$dontrecurse) = False,
-                Bool:D :c(:$createonly) = False, Bool:D :n(:$no-to-check) = False --&gt; Bool:D) is export
+                Bool:D :d(:$dontrecurse) = False, Bool:D :c(:$createonly) = False,
+                Bool:D :n(:$no-to-check) = False, Bool:D :$backtrace = False,
+                Bool:D :$noErrorMessages = False --&gt; Bool:D) is export 
 
 </pre><p>Copy the <code>$from</code> path to the <code>$to</code> path recursively by default.</p><p>Where</p><ul>
 <li><p><code>$from</code> The path to copy from.</p></li>
@@ -626,9 +631,27 @@ footer {
 <ul>
 <li><p>i.e. normally will check if <code>$from.basename eq $to.basename</code> if so then will try to copy <code>$from/*</code> into <code>$to/*</code> note this includes <code>.</code> files; if this is true will not do this.</p></li>
 </ul>
+<li><p><code>:$backtrace</code> Show backtrace messages for any error messages.</p></li>
+<li><p><code>:$noErrorMessages</code> Don't show error messages.</p></li>
+</ul>
+<p><a href="#table-of-contents">Table of Contents</a></p></section><section name="pod"><h1 id="sub_prunepath(...)_is_export"><a href="#File::Path::Copy_0" class="u" title="go to top of document">sub prunepath(...) is export</a></h1>
+<pre class="pod-block-code">sub prunepath(IO::Path $path, Bool:D :$backtrace = False,
+                Bool:D :$noErrorMessages = False --&gt; Bool:D) is export
+
+</pre><p>Remove a path and everything under it.</p><p>Where</p><ul>
+<li><p><code>$path</code> The path to prune.</p></li>
+<li><p><code>:$backtrace</code> If true then write backtrace to any error messages. item1 <code>:$noErrorMessages</code> Don't show error messages.</p></li>
+</ul>
+<p><a href="#table-of-contents">Table of Contents</a></p></section><section name="pod"><h1 id="sub_emptypath(...)_is_export"><a href="#File::Path::Copy_0" class="u" title="go to top of document">sub emptypath(...) is export</a></h1>
+<pre class="pod-block-code">sub emptypath(IO::Path $path, Bool:D :$backtrace = False,
+                Bool:D :$noErrorMessages = False --&gt; Bool:D) is export
+
+</pre><p>Remove everything under a path, but leave the path.</p><p>Where</p><ul>
+<li><p><code>$path</code> The path to prune.</p></li>
+<li><p><code>:$backtrace</code> If true then write backtrace to any error messages. item1 <code>:$noErrorMessages</code> Don't show error messages.</p></li>
 </ul>
 <p><a href="#table-of-contents">Table of Contents</a></p></section>		</div>
-</div><footer><div>Rendered from <span class="path">UNNAMED</span></div><div>at <span class="time">2025-07-10T15:16:56Z</span></div></footer>
+</div><footer><div>Rendered from <span class="path">UNNAMED</span></div><div>at <span class="time">2025-07-11T02:50:48Z</span></div></footer>
 	</body>
 </html>
 

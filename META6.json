@@ -8,10 +8,10 @@
   "tags": [
     ""
   ],
-  "source-url": "git@github.com:grizzlysmit/File-Path-Copy.git",
+  "source-url": "https://github.com/grizzlysmit/File-Path-Copy.git",
   "version": "0.1.0",
   "provides": {
-    "File::Path::Copy": "lib/File::Path::Copy.rakumod"
+    "File::Path::Copy": "lib/File/Path/Copy.rakumod"
   },
   "auth": "zef:grizzlysmit",
   "license": "LGPL-3.0-or-later",

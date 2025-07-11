@@ -3,7 +3,11 @@ use lib 'lib';
 use File::Path::Copy;
 use Test;
 
-plan 1;
+plan 2;
 
-ok(copypath(".".IO, "../scratch".IO));
+ok(emptypath('scratch'.IO), "empting scratch");
+#run qqww{exa -F -lahigHTb --colour-scale --time-style=full-iso --icons=always scratch};
+
+ok(copypath("rakulib".IO, "scratch".IO), "copying the whole rakulib tree into scratch");
+#run qqww{exa -F -lahigHTb --colour-scale --time-style=full-iso --icons=always scratch};
 

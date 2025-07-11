@@ -25,6 +25,10 @@ Table of Contents
 
   * [sub copypath(...) is export](#sub-copypath-is-export)
 
+  * [sub prunepath(...) is export](#sub-prunepath-is-export)
+
+  * [sub emptypath(...) is export](#sub-emptypath-is-export)
+
 NAME
 ====
 
@@ -74,8 +78,9 @@ sub copypath(...) is export
 
 ```raku
 sub copypath(IO::Path $from, IO::Path $to,
-                Bool:D :d(:$dontrecurse) = False,
-                Bool:D :c(:$createonly) = False, Bool:D :n(:$no-to-check) = False --> Bool:D) is export
+                Bool:D :d(:$dontrecurse) = False, Bool:D :c(:$createonly) = False,
+                Bool:D :n(:$no-to-check) = False, Bool:D :$backtrace = False,
+                Bool:D :$noErrorMessages = False --> Bool:D) is export
 ```
 
 Copy the `$from` path to the `$to` path recursively by default.
@@ -93,6 +98,46 @@ Where
   * `:n` `:$no-to-check` Don't do the check on whether the to file is the same as the source.
 
     * i.e. normally will check if `$from.basename eq $to.basename` if so then will try to copy `$from/*` into `$to/*` note this includes `.` files; if this is true will not do this.
+
+  * `:$backtrace` Show backtrace messages for any error messages.
+
+  * `:$noErrorMessages` Don't show error messages.
+
+[Table of Contents](#table-of-contents)
+
+sub prunepath(...) is export
+============================
+
+```raku
+sub prunepath(IO::Path $path, Bool:D :$backtrace = False,
+                Bool:D :$noErrorMessages = False --> Bool:D) is export
+```
+
+Remove a path and everything under it.
+
+Where
+
+  * `$path` The path to prune.
+
+  * `:$backtrace` If true then write backtrace to any error messages. item1 `:$noErrorMessages` Don't show error messages.
+
+[Table of Contents](#table-of-contents)
+
+sub emptypath(...) is export
+============================
+
+```raku
+sub emptypath(IO::Path $path, Bool:D :$backtrace = False,
+                Bool:D :$noErrorMessages = False --> Bool:D) is export
+```
+
+Remove everything under a path, but leave the path.
+
+Where
+
+  * `$path` The path to prune.
+
+  * `:$backtrace` If true then write backtrace to any error messages. item1 `:$noErrorMessages` Don't show error messages.
 
 [Table of Contents](#table-of-contents)
 

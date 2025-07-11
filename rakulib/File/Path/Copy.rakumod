@@ -20,6 +20,8 @@ Table of Contents
 =item1 L<Introduction|#introduction>
 =item2 L<Motivation|#motivation>
 =item1 L<sub copypath(...) is export|#sub-copypath-is-export>
+=item1 L<sub prunepath(...) is export|#sub-prunepath-is-export>
+=item1 L<sub emptypath(...) is export|#sub-emptypath-is-export>
 
 
 =NAME File::Path::Copy 
@@ -48,8 +50,9 @@ L<Table of Contents|#table-of-contents>
 =begin code :lang<raku>
 
 sub copypath(IO::Path $from, IO::Path $to,
-                Bool:D :d(:$dontrecurse) = False,
-                Bool:D :c(:$createonly) = False, Bool:D :n(:$no-to-check) = False --> Bool:D) is export
+                Bool:D :d(:$dontrecurse) = False, Bool:D :c(:$createonly) = False,
+                Bool:D :n(:$no-to-check) = False, Bool:D :$backtrace = False,
+                Bool:D :$noErrorMessages = False --> Bool:D) is export 
 
 =end code
 
@@ -62,20 +65,39 @@ Where
 =item1 C«:c»  C«:$createonly»    Makes it an Error to try to overwrite a file.
 =item1 C«:n»  C«:$no-to-check»   Don't do the check on whether the to file is the same as the source.
 =item2 i.e. normally will check if C«$from.basename eq $to.basename» if so then will try to copy C«$from/*» into C«$to/*» note this includes C«.» files; if this is true will not do this.
+=item1 C«:$backtrace»            Show backtrace messages for any error messages.
+=item1 C«:$noErrorMessages»      Don't show error messages.
 
 L<Table of Contents|#table-of-contents>
 
 =end pod
 
 sub copypath(IO::Path $from, IO::Path $to,
-                Bool:D :d(:$dontrecurse) = False,
-                Bool:D :c(:$createonly) = False, Bool:D :n(:$no-to-check) = False --> Bool:D) is export {
+                Bool:D :d(:$dontrecurse) = False, Bool:D :c(:$createonly) = False,
+                Bool:D :n(:$no-to-check) = False, Bool:D :$backtrace = False,
+                Bool:D :$noErrorMessages = False --> Bool:D) is export {
+    CATCH {
+        when X::IO::Copy, X::IO::Unlink, X::IO::Mkdir, X::IO::DoesNotExist {
+            if !$noErrorMessages {
+                $*ERR.say: .message;
+                if $backtrace {
+                    for .backtrace.reverse {
+                        next if .file.starts-with('SETTING::');
+                        next unless .subname;
+                        $*ERR.say: "  in block {.subname} at {.file} line {.line}";
+                    } # for .backtrace.reverse #
+                } # if $backtrace #
+            }
+            return False;
+        }
+    }
     my $result = True;
     if $from ~~ :d {
         if $to ~~ :d {
             my $target = $from.basename;
             if $target eq $to.basename && !$no-to-check {
-                for $from.dir() -> $file {
+                my @children = $from.dir();
+                for @children -> $file {
                     if !$dontrecurse {
                         $result &&= copypath($file, $to, :$dontrecurse, :$createonly, :no-to-check);
                     } else {
@@ -86,7 +108,8 @@ sub copypath(IO::Path $from, IO::Path $to,
             } else {
                 my $path = "{$to.path}/$target";
                 if $path.IO.mkdir {
-                    for $from.dir() -> $file {
+                    my @children = $from.dir();
+                    for @children -> $file {
                         if !$dontrecurse {
                             $result &&= copypath($file, $path.IO, :$dontrecurse, :$createonly, :no-to-check);
                         } else {
@@ -154,4 +177,126 @@ sub copypath(IO::Path $from, IO::Path $to,
         }
     }
     return False;
-}
+} #`«« sub copypath(IO::Path $from, IO::Path $to,
+                Bool:D :d(:$dontrecurse) = False, Bool:D :c(:$createonly) = False,
+                Bool:D :n(:$no-to-check) = False, Bool:D :$backtrace = False,
+                Bool:D :$noErrorMessages = False --> Bool:D) is export »»
+
+=begin pod
+
+=head1 sub prunepath(...) is export
+
+=begin code :lang<raku>
+
+sub prunepath(IO::Path $path, Bool:D :$backtrace = False,
+                Bool:D :$noErrorMessages = False --> Bool:D) is export
+
+=end code
+
+Remove a path and everything under it.
+
+Where
+=item1 C«$path»                  The path to prune.
+=item1 C«:$backtrace»            If true then write backtrace to any error messages.
+item1 C«:$noErrorMessages»      Don't show error messages.
+
+L<Table of Contents|#table-of-contents>
+
+=end pod
+
+sub prunepath(IO::Path $path, Bool:D :$backtrace = False,
+                Bool:D :$noErrorMessages = False --> Bool:D) is export {
+    if $path ~~ :d {
+        CATCH {
+            when X::IO::Rmdir, X::IO::DoesNotExist {
+                if !$noErrorMessages {
+                    $*ERR.say: .message;
+                    if $backtrace {
+                        for .backtrace.reverse {
+                            next if .file.starts-with('SETTING::');
+                            next unless .subname;
+                            $*ERR.say: "  in block {.subname} at {.file} line {.line}";
+                        } # for .backtrace.reverse #
+                    } # if $backtrace #
+                } # if !$noErrorMessages #
+                return False;
+            } # when X::IO::Rmdir #
+        } # CATCH #
+        my Bool:D $result = True;
+        my @children = $path.dir();
+        for @children -> $file {
+            $result &&= prunepath($file, :$backtrace);
+        } # for $path.dir() -> $file #
+        $result &&= $path.rmdir;
+        return $result;
+    } else {
+        CATCH {
+            when X::IO::Unlink {
+                if !$noErrorMessages {
+                    $*ERR.say: .message;
+                    if $backtrace {
+                        for .backtrace.reverse {
+                            next if .file.starts-with('SETTING::');
+                            next unless .subname;
+                            $*ERR.say: "  in block {.subname} at {.file} line {.line}";
+                        } # for .backtrace.reverse #
+                    } # if $backtrace #
+                } # if !$noErrorMessages #
+                return False;
+            } # when X::IO::Unlink #
+        } # CATCH #
+        return $path.unlink;
+    }
+} #`«« sub prunepath(IO::Path $path, Bool:D :$backtrace = False,
+                Bool:D :$noErrorMessages = False --> Bool:D) is export »»
+
+=begin pod
+
+=head1 sub emptypath(...) is export
+
+=begin code :lang<raku>
+
+sub emptypath(IO::Path $path, Bool:D :$backtrace = False,
+                Bool:D :$noErrorMessages = False --> Bool:D) is export
+
+=end code
+
+Remove everything under a path,  but leave the path.
+
+Where
+=item1 C«$path»                  The path to prune.
+=item1 C«:$backtrace»            If true then write backtrace to any error messages.
+item1 C«:$noErrorMessages»      Don't show error messages.
+
+L<Table of Contents|#table-of-contents>
+
+=end pod
+
+sub emptypath(IO::Path $path, Bool:D :$backtrace = False,
+                Bool:D :$noErrorMessages = False --> Bool:D) is export {
+    CATCH {
+        when X::IO::Unlink, X::IO::DoesNotExist {
+            if !$noErrorMessages {
+                $*ERR.say: .message;
+                if $backtrace {
+                    for .backtrace.reverse {
+                        next if .file.starts-with('SETTING::');
+                        next unless .subname;
+                        $*ERR.say: "  in block {.subname} at {.file} line {.line}";
+                    } # for .backtrace.reverse #
+                } # if $backtrace #
+            } # if !$noErrorMessages #
+            return False;
+        } # when X::IO::Unlink #
+    } # CATCH #
+    if $path ~~ :d {
+        my Bool:D $result = True;
+        my @children = $path.dir();
+        for @children -> $file {
+            $result &&= prunepath($file, :$backtrace);
+        } # for $path.dir() -> $file #
+        return $result;
+    } else {
+        return $path.unlink;
+    }
+} # sub emptypath(IO::Path $path, Bool:D :$backtrace = False --> Bool:D) is export #
