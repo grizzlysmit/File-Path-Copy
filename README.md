@@ -42,7 +42,7 @@ Francis Grizzly Smit (grizzly@smit.id.au)
 VERSION
 =======
 
-v0.1.0
+v0.1.4
 
 TITLE
 =====
@@ -64,7 +64,7 @@ GPL V3.0+ [LICENSE](https://github.com/grizzlysmit/File::Path::Copy/blob/main/LI
 Introduction
 ============
 
-This is a Raku module to recursively copy files. 
+This is a Raku module to recursively copy or delete files. 
 
 Motivation
 ----------
