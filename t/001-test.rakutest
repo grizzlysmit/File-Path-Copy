@@ -3,13 +3,16 @@ use lib 'lib';
 use File::Path::Copy;
 use Test;
 
-plan 4;
+plan 7;
 
-ok(emptypath('scratch'.IO), "empting scratch");
+ok(emptypath('scratch'.IO), "emptying scratch");
 #run qqww{exa -F -lahigHTb --colour-scale --time-style=full-iso --icons=always scratch};
 nok("scratch/rakulib/File/Path/Copy.rakumod".IO ~~ :f, "make sure there is nothing left.");
 
 ok(copypath("rakulib".IO, "scratch".IO), "copying the whole rakulib tree into scratch");
 #run qqww{exa -F -lahigHTb --colour-scale --time-style=full-iso --icons=always scratch};
 ok("scratch/rakulib/File/Path/Copy.rakumod".IO ~~ :f, "make sure it is there.");
+ok(prunepath('scratch/rakulib'.IO), "emptying scratch");
+nok("scratch/rakulib".IO ~~ :d, "make sure there is nothing left.");
+ok(copypath("rakulib".IO, "scratch".IO), "copying the whole rakulib tree into scratch");
 

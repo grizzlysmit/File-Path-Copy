@@ -52,7 +52,7 @@ File::Path::Copy
 SUBTITLE
 ========
 
-A Raku module for recursively copying files.
+A Raku module for recursively copying or deleting files.
 
 COPYRIGHT
 =========

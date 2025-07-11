@@ -28,7 +28,7 @@ Table of Contents
 =AUTHOR Francis Grizzly Smit (grizzly@smit.id.au)
 =VERSION v0.1.0
 =TITLE File::Path::Copy
-=SUBTITLE A Raku module for recursively copying files.
+=SUBTITLE A Raku module for recursively copying or deleting files.
 
 =COPYRIGHT
 GPL V3.0+ L<LICENSE|https://github.com/grizzlysmit/File::Path::Copy/blob/main/LICENSE>
