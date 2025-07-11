@@ -3,21 +3,26 @@ use lib 'lib';
 use File::Path::Copy;
 use Test;
 
-plan 8;
+plan 10;
 
 my $time = time;
 my $tmp  = $*TMPDIR.path;
 
 is("$tmp/scratch-$time".IO.mkdir, "$tmp/scratch-$time".IO, "create the tmp dir");
+is("$tmp/lib-$time".IO.mkdir, "$tmp/lib-$time".IO, "create the lib dir");
+
+is("$tmp/lib-$time/lib/File/Path".IO.mkdir, "$tmp/lib-$time/lib/File/Path".IO, "create the pretend data dir");
+
+"$tmp/lib-$time/lib/File/Path/Copy.txt".IO.spurt("hello this is\na pretend data file");
 
 ok(emptypath("$tmp/scratch-$time".IO), "emptying $tmp/scratch-$time");
 #run qqww{exa -F -lahigHTb --colour-scale --time-style=full-iso --icons=always $tmp/scratch-$time};
-nok("$tmp/scratch-$time/lib/File/Path/Copy.rakumod".IO ~~ :f, "make sure there is nothing left.");
+nok("$tmp/scratch-$time/lib/File/Path/Copy.txt".IO ~~ :f, "make sure there is nothing left.");
 
-ok(copypath("lib".IO, "$tmp/scratch-$time".IO), "copying the whole lib tree into $tmp/scratch-$time");
+ok(copypath("$tmp/lib-$time/lib".IO, "$tmp/scratch-$time".IO), "copying the whole lib tree into $tmp/scratch-$time");
 #run qqww{exa -F -lahigHTb --colour-scale --time-style=full-iso --icons=always $tmp/scratch-$time};
-ok("$tmp/scratch-$time/lib/File/Path/Copy.rakumod".IO ~~ :f, "make sure it is there.");
+ok("$tmp/scratch-$time/lib/File/Path/Copy.txt".IO ~~ :f, "make sure it is there.");
 ok(prunepath("$tmp/scratch-$time/lib".IO), "emptying $tmp/scratch-$time");
 nok("$tmp/scratch-$time/lib".IO ~~ :d, "make sure there is nothing left.");
-ok(copypath("lib".IO, "$tmp/scratch-$time".IO), "copying the whole lib tree into $tmp/scratch-$time");
+ok(copypath("$tmp/lib-$time/lib".IO, "$tmp/scratch-$time".IO), "copying the whole lib tree into $tmp/scratch-$time");
 
