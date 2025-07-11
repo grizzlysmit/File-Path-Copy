@@ -9,7 +9,7 @@
     ""
   ],
   "source-url": "https://github.com/grizzlysmit/File-Path-Copy.git",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "provides": {
     "File::Path::Copy": "lib/File/Path/Copy.rakumod"
   },
