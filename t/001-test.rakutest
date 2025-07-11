@@ -3,7 +3,7 @@ use lib 'lib';
 use Test;
 use File::Path::Copy;
 
-plan 10;
+plan 11;
 
 my Int:D $time = time;
 my Str:D $tmp  = $*TMPDIR.path;
@@ -14,6 +14,7 @@ is("$tmp/lib-$time".IO.mkdir, "$tmp/lib-$time".IO, "create the lib dir");
 is("$tmp/lib-$time/lib/File/Path".IO.mkdir, "$tmp/lib-$time/lib/File/Path".IO, "create the pretend data dir");
 
 "$tmp/lib-$time/lib/File/Path/Copy.txt".IO.spurt("hello this is\na pretend data file");
+ok("$tmp/tmp-$time/lib/File/Path/Copy.txt".IO ~~ :f, "make sure it is there.");
 
 ok(emptypath("$tmp/scratch-$time".IO), "emptying $tmp/scratch-$time");
 #run qqww{exa -F -lahigHTb --colour-scale --time-style=full-iso --icons=always $tmp/scratch-$time};
