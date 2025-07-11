@@ -1,7 +1,7 @@
 use v6;
 use lib 'lib';
-use File::Path::Copy;
 use Test;
+use File::Path::Copy;
 
 plan 10;
 
