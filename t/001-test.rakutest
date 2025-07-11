@@ -3,16 +3,20 @@ use lib 'lib';
 use File::Path::Copy;
 use Test;
 
-plan 7;
+plan 8;
 
-ok(emptypath('scratch'.IO), "emptying scratch");
-#run qqww{exa -F -lahigHTb --colour-scale --time-style=full-iso --icons=always scratch};
-nok("scratch/lib/File/Path/Copy.rakumod".IO ~~ :f, "make sure there is nothing left.");
+my $time = time;
 
-ok(copypath("lib".IO, "scratch".IO), "copying the whole lib tree into scratch");
-#run qqww{exa -F -lahigHTb --colour-scale --time-style=full-iso --icons=always scratch};
-ok("scratch/lib/File/Path/Copy.rakumod".IO ~~ :f, "make sure it is there.");
-ok(prunepath('scratch/lib'.IO), "emptying scratch");
-nok("scratch/lib".IO ~~ :d, "make sure there is nothing left.");
-ok(copypath("lib".IO, "scratch".IO), "copying the whole lib tree into scratch");
+is("/tmp/scratch-$time".IO.mkdir, "/tmp/scratch-$time".IO, "create the tmp dir");
+
+ok(emptypath("/tmp/scratch-$time".IO), "emptying /tmp/scratch-$time");
+#run qqww{exa -F -lahigHTb --colour-scale --time-style=full-iso --icons=always /tmp/scratch-$time};
+nok("/tmp/scratch-$time/lib/File/Path/Copy.rakumod".IO ~~ :f, "make sure there is nothing left.");
+
+ok(copypath("lib".IO, "/tmp/scratch-$time".IO), "copying the whole lib tree into /tmp/scratch-$time");
+#run qqww{exa -F -lahigHTb --colour-scale --time-style=full-iso --icons=always /tmp/scratch-$time};
+ok("/tmp/scratch-$time/lib/File/Path/Copy.rakumod".IO ~~ :f, "make sure it is there.");
+ok(prunepath("/tmp/scratch-$time/lib".IO), "emptying /tmp/scratch-$time");
+nok("/tmp/scratch-$time/lib".IO ~~ :d, "make sure there is nothing left.");
+ok(copypath("lib".IO, "/tmp/scratch-$time".IO), "copying the whole lib tree into /tmp/scratch-$time");
 
