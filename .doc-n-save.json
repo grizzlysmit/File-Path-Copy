@@ -6,7 +6,7 @@
     "bin": "bin",
     "name": "File::Path::Copy",
     "separate-markdown-files": false,
-    "lib": "rakulib",
+    "lib": "lib",
     "comment": "File::Path::Copy ",
     "only-app": false,
     "markdown-path": "README.md",
