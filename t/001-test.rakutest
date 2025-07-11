@@ -5,8 +5,8 @@ use Test;
 
 plan 10;
 
-my $time = time;
-my $tmp  = $*TMPDIR.path;
+my Int:D $time = time;
+my Str:D $tmp  = $*TMPDIR.path;
 
 is("$tmp/scratch-$time".IO.mkdir, "$tmp/scratch-$time".IO, "create the tmp dir");
 is("$tmp/lib-$time".IO.mkdir, "$tmp/lib-$time".IO, "create the lib dir");
