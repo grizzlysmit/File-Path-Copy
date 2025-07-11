@@ -1,4 +1,4 @@
-unit module File::Path::Copy:ver<0.1.0>:auth<Francis Grizzly Smit (grizzly@smit.id.au)>;
+unit module File::Path::Copy:ver<0.1.2>:auth<Francis Grizzly Smit (grizzly@smit.id.au)>;
 
 =begin pod
 
@@ -94,7 +94,7 @@ sub copypath(IO::Path $from, IO::Path $to,
     my $result = True;
     if $from ~~ :d {
         if $to ~~ :d {
-            my $target = $from.basename;
+            my Str:D $target = $from.basename;
             if $target eq $to.basename && !$no-to-check {
                 my @children = $from.dir();
                 for @children -> $file {
