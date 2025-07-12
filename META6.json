@@ -1,6 +1,6 @@
 {
   "description": "A Raku module for recursively copying or deleting files.",
-  "name": "File::Path::Copy",
+  "name": "File-Path-Copy",
   "perl": "6.d",
   "depends": [
     ""
@@ -9,7 +9,7 @@
     ""
   ],
   "source-url": "https://github.com/grizzlysmit/File-Path-Copy.git",
-  "version": "0.1.15",
+  "version": "0.1.16",
   "provides": {
     "File::Path::Copy": "lib/File/Path/Copy.rakumod"
   },
