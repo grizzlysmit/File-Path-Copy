@@ -1,4 +1,4 @@
-unit module File::Path::Copy:ver<0.1.16>:auth<Francis Grizzly Smit (grizzly@smit.id.au)>;
+unit module File::Path::Copy:ver<0.1.17>:auth<Francis Grizzly Smit (grizzly@smit.id.au)>;
 
 =begin pod
 
@@ -26,7 +26,7 @@ Table of Contents
 
 =NAME File::Path::Copy 
 =AUTHOR Francis Grizzly Smit (grizzly@smit.id.au)
-=VERSION v0.1.16
+=VERSION v0.1.17
 =TITLE File::Path::Copy
 =SUBTITLE A Raku module for recursively copying or deleting files.
 
@@ -106,14 +106,14 @@ sub copypath(IO::Path $from, IO::Path $to,
                 }
                 return $result;
             } else {
-                my $path = "{$to.path}/$target";
-                if $path.IO.mkdir {
+                my $path = $to.add($target).resolve;
+                if $path.mkdir {
                     my @children = $from.dir();
                     for @children -> $file {
                         if !$dontrecurse {
-                            $result &&= copypath($file, $path.IO, :$dontrecurse, :$createonly, :no-to-check);
+                            $result &&= copypath($file, $path, :$dontrecurse, :$createonly, :no-to-check);
                         } else {
-                            $result &&= $file.copy($path.IO, :$createonly);
+                            $result &&= $file.copy($path, :$createonly);
                         }
                     }
                     return $result;
@@ -136,7 +136,7 @@ sub copypath(IO::Path $from, IO::Path $to,
             if $to.unlink {
                 return copypath($from, $to, :$dontrecurse, :$createonly, :no-to-check);
             }
-        } elsif $to.dirname ~~ :d {
+        } elsif $to.dirname.IO ~~ :d {
             if $to.mkdir {
                 return copypath($from, $to, :$dontrecurse, :$createonly, :no-to-check);
             } else {
@@ -148,7 +148,7 @@ sub copypath(IO::Path $from, IO::Path $to,
     } elsif $from ~~ :f {
         my $target = $from.basename;
         if $to ~~ :d {
-            return $from.copy("{$to.path}/$target".IO, :$createonly);
+            return $from.copy($to.add($target).resolve, :$createonly);
         } elsif $to ~~ :f {
             return False if $createonly;
             $to.unlink;
@@ -165,7 +165,7 @@ sub copypath(IO::Path $from, IO::Path $to,
     } elsif $from ~~ :l {
         my $target = $from.basename;
         if $to ~~ :d {
-            return $from.copy("{$to.path}/$target".IO, :$createonly);
+            return $from.copy($to.add($target).resolve, :$createonly);
         } elsif $to ~~ :f {
             return False if $createonly;
             $to.unlink;
